@@ -165,6 +165,52 @@ useEffect(() => {
 
 **Important**: Data loading happens client-side only. No server-side generation is used, maintaining full Vercel static export compatibility.
 
+## Basemap Spec
+
+The world map basemap provides geographic context for trade routes and chokepoints. It follows a **secondary visual priority** design philosophy—visible but non-intrusive.
+
+### Layer Order
+
+1. **Bathymetry gradient** - Radial gradient ocean background (#0E151B → #0B0F12)
+2. **Continents** - Simplified landmasses (#0E151B @ 90% opacity)
+3. **Coastlines** - Subtle borders (#1C2935 @ 55% opacity)
+4. **Country boundaries** - Very subtle (#1C2935 @ 35% opacity)
+5. **Graticule** - Latitude/longitude grid, 20° intervals (#203040 @ 30% opacity, dashed)
+6. **Trade routes** - Animated arcs with risk-based coloring
+7. **Chokepoints** - Port and strait markers with glow effects
+8. **Tooltips** - Glass-style info cards on interaction
+
+### Projection
+
+**Equirectangular** (Plate Carrée) - A simple cylindrical projection suitable for:
+- Global view of trade networks
+- Straight-line coordinate calculations
+- Low computational overhead
+- Compatibility with SVG rendering
+
+### Visual Hierarchy
+
+- **Primary**: Trade routes and chokepoints (risk colors, animations)
+- **Secondary**: Basemap geography (muted, low contrast)
+- **Tertiary**: Grid patterns and decorative elements
+
+### Controls
+
+- **Toggle Basemap** (🌐 icon) - Show/hide world geography layer
+- **Zoom In/Out** - Adjust map scale
+- **Reset View** - Return to default viewport
+- **Fit to Data** - Auto-fit all visible routes
+- **Colorblind Mode** - Switch to accessibility-friendly palette
+
+### Why Secondary Design
+
+The basemap is designed to **support, not compete** with trade flow data:
+
+- Low saturation prevents visual conflict with route colors
+- Simplified geometry reduces cognitive load
+- Toggle allows users to focus on pure data when needed
+- Consistent with "Holographic Glass / Orbital UI" aesthetic
+
 ## Performance
 
 - Target: 60 FPS with ~50 trade flow arcs

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, useCallback, useMemo } from "react"
 import { tradeRoutes, chokepoints } from "@/lib/mock-data"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ZoomIn, ZoomOut, RotateCcw, Layers, Radio, Maximize2 } from "lucide-react"
+import { ZoomIn, ZoomOut, RotateCcw, Layers, Radio, Maximize2, Globe } from "lucide-react"
 
 interface WorldMapProps {
   selectedRoute?: string | null
@@ -178,6 +178,85 @@ const AnimatedArc = ({
   )
 }
 
+interface BasemapProps {
+  width: number
+  height: number
+  showBasemap: boolean
+}
+
+// World basemap layer with simplified continents
+const WorldBasemap = ({ width, height, showBasemap }: BasemapProps) => {
+  if (!showBasemap) return null
+  
+  // Simplified continent outlines (Equirectangular projection)
+  // These are rough approximations for a low-detail base layer
+  const continents = [
+    // Africa outline (very simplified)
+    "M 420 250 L 450 200 L 520 150 L 550 200 L 570 300 L 550 450 L 520 480 L 450 460 L 420 380 Z",
+    // Europe outline
+    "M 480 180 L 520 140 L 570 130 L 610 150 L 630 170 L 620 200 L 580 210 L 520 190 Z",
+    // Asia outline (mainland)
+    "M 550 150 L 750 130 L 920 150 L 940 200 L 930 250 L 920 280 L 850 300 L 750 290 L 650 280 L 550 250 Z",
+    // North America outline
+    "M 180 120 L 280 100 L 350 150 L 380 220 L 370 270 L 350 300 L 320 320 L 280 300 L 240 250 L 200 200 L 180 120 Z",
+    // South America outline
+    "M 250 350 L 320 340 L 380 370 L 400 450 L 380 520 L 320 550 L 250 520 Z",
+    // Australia outline
+    "M 850 380 L 970 370 L 980 420 L 970 450 L 920 460 L 880 440 Z",
+  ]
+  
+  return (
+    <g>
+      {/* Bathymetry gradient background */}
+      <defs>
+        <radialGradient id="bathymetry" cx="50%" cy="40%">
+          <stop offset="0%" stopColor="#0E151B" stopOpacity="0.9" />
+          <stop offset="100%" stopColor="#0B0F12" stopOpacity="1" />
+        </radialGradient>
+      </defs>
+      
+      {/* Ocean base */}
+      <rect width={width} height={height} fill="url(#bathymetry)" />
+      
+      {/* Continents */}
+      {continents.map((path, index) => (
+        <path
+          key={`continent-${index}`}
+          d={path}
+          fill="#0E151B"
+          fillOpacity="0.9"
+          stroke="#1C2935"
+          strokeWidth="1"
+          strokeOpacity="0.55"
+        />
+      ))}
+      
+      {/* Country boundaries (subtle) */}
+      <path
+        d="M 480 180 L 520 140 L 570 130 L 610 150 L 630 170"
+        stroke="#1C2935"
+        strokeWidth="0.5"
+        strokeOpacity="0.35"
+        fill="none"
+      />
+      
+      {/* Graticule (latitude/longitude lines) */}
+      <g stroke="#203040" strokeWidth="0.5" strokeDasharray="3,3" strokeOpacity="0.3" fill="none">
+        {/* Latitude lines (20° intervals) */}
+        {[-60, -40, -20, 0, 20, 40, 60].map((lat) => {
+          const y = ((90 - lat) / 180) * height
+          return <line key={`lat-${lat}`} x1="0" y1={y} x2={width} y2={y} />
+        })}
+        {/* Longitude lines (20° intervals) */}
+        {[-180, -160, -140, -120, -100, -80, -60, -40, -20, 0, 20, 40, 60, 80, 100, 120, 140, 160, 180].map((lng) => {
+          const x = ((lng + 180) / 360) * width
+          return <line key={`lng-${lng}`} x1={x} y1="0" x2={x} y2={height} />
+        })}
+      </g>
+    </g>
+  )
+}
+
 interface ChokepointProps {
   point: any
   width: number
@@ -262,6 +341,7 @@ export function WorldMap({ selectedRoute, onRouteSelect }: WorldMapProps) {
   const [selectedRoutes, setSelectedRoutes] = useState<Set<string>>(new Set())
   const [focusedElement, setFocusedElement] = useState<string | null>(null)
   const [isColorblind, setIsColorblind] = useState(false)
+  const [showBasemap, setShowBasemap] = useState(true)
   const [animationProgress, setAnimationProgress] = useState(0)
   const [viewBox, setViewBox] = useState({ x: 0, y: 0, scale: 1 })
   const [isPanning, setIsPanning] = useState(false)
@@ -469,7 +549,7 @@ export function WorldMap({ selectedRoute, onRouteSelect }: WorldMapProps) {
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [onRouteSelect])
-  
+
   return (
     <div ref={containerRef} className="relative w-full h-full bg-[#0A0F14] rounded-[14px] overflow-hidden">
       {/* SVG Map */}
@@ -498,42 +578,17 @@ export function WorldMap({ selectedRoute, onRouteSelect }: WorldMapProps) {
           </linearGradient>
         </defs>
         
-        {/* Grid background */}
-        <rect width="100%" height="100%" fill="url(#grid)" />
+        {/* World basemap layer */}
+        <WorldBasemap
+          width={dimensions.width}
+          height={dimensions.height}
+          showBasemap={showBasemap}
+        />
         
-        {/* Latitude and longitude lines */}
-        <g opacity="0.06">
-          {[-60, -30, 0, 30, 60].map((lat) => {
-            const y = ((90 - lat) / 180) * dimensions.height
-            return (
-              <line
-                key={`lat-${lat}`}
-                x1="0"
-                y1={y}
-                x2={dimensions.width}
-                y2={y}
-                stroke="rgba(255, 255, 255, 0.6)"
-                strokeWidth="1"
-                strokeDasharray="5,5"
-              />
-            )
-          })}
-          {[-180, -120, -60, 0, 60, 120, 180].map((lng) => {
-            const x = ((lng + 180) / 360) * dimensions.width
-            return (
-              <line
-                key={`lng-${lng}`}
-                x1={x}
-                y1="0"
-                x2={x}
-                y2={dimensions.height}
-                stroke="rgba(255, 255, 255, 0.6)"
-                strokeWidth="1"
-                strokeDasharray="5,5"
-              />
-            )
-          })}
-        </g>
+        {/* Fallback grid background when basemap is hidden */}
+        {!showBasemap && (
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        )}
         
         {/* Trade routes (sorted by risk) */}
         {sortedRoutes.map((route, index) => (
@@ -653,6 +708,15 @@ export function WorldMap({ selectedRoute, onRouteSelect }: WorldMapProps) {
           title="Fit to data"
         >
           <Maximize2 className="w-4 h-4" />
+        </Button>
+        <Button
+          variant={showBasemap ? "default" : "outline"}
+          size="sm"
+          onClick={() => setShowBasemap(!showBasemap)}
+          className="bg-black/40 backdrop-blur-xl border-white/10 h-8 w-8 p-0"
+          title="Toggle basemap"
+        >
+          <Globe className="w-4 h-4" />
         </Button>
         <Button
           variant={isColorblind ? "default" : "outline"}

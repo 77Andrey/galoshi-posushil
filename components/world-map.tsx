@@ -247,7 +247,7 @@ const ChokepointMarker = ({
 export function WorldMap({ selectedRoute, onRouteSelect }: WorldMapProps) {
   const svgRef = useRef<SVGSVGElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+  const [dimensions, setDimensions] = useState({ width: 1000, height: 600 })
   const [hoveredRoute, setHoveredRoute] = useState<string | null>(null)
   const [hoveredPoint, setHoveredPoint] = useState<string | null>(null)
   const [selectedRoutes, setSelectedRoutes] = useState<Set<string>>(new Set())
@@ -260,6 +260,7 @@ export function WorldMap({ selectedRoute, onRouteSelect }: WorldMapProps) {
   const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null)
   const [tooltipData, setTooltipData] = useState<any>(null)
   const animationFrameRef = useRef<number>()
+  const mountedRef = useRef(false)
   
   // Detect reduced motion preference
   const prefersReducedMotion = useMemo(() => {
@@ -267,22 +268,31 @@ export function WorldMap({ selectedRoute, onRouteSelect }: WorldMapProps) {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches
   }, [])
   
-  // Update dimensions
+  // Update dimensions - immediate on mount
   useEffect(() => {
+    if (!mountedRef.current) {
+      mountedRef.current = true
+      
+      // Immediate update on mount
     const updateDimensions = () => {
-      if (containerRef.current) {
+        if (containerRef.current) {
         setDimensions({
-          width: containerRef.current.clientWidth,
-          height: containerRef.current.clientHeight,
+            width: containerRef.current.clientWidth || 1000,
+            height: containerRef.current.clientHeight || 600,
         })
       }
     }
-    
+
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(() => {
     updateDimensions()
+      })
+      
     window.addEventListener("resize", updateDimensions)
     return () => window.removeEventListener("resize", updateDimensions)
+    }
   }, [])
-  
+
   // Animation loop (60 FPS)
   useEffect(() => {
     if (prefersReducedMotion) return
@@ -451,14 +461,6 @@ export function WorldMap({ selectedRoute, onRouteSelect }: WorldMapProps) {
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [onRouteSelect])
   
-  if (dimensions.width === 0 || dimensions.height === 0) {
-    return (
-      <div className="relative w-full h-full bg-[#0A0F14] rounded-lg flex items-center justify-center">
-        <div className="text-muted-foreground text-sm">Loading map...</div>
-      </div>
-    )
-  }
-  
   return (
     <div ref={containerRef} className="relative w-full h-full bg-[#0A0F14] rounded-[14px] overflow-hidden">
       {/* SVG Map */}
@@ -598,15 +600,15 @@ export function WorldMap({ selectedRoute, onRouteSelect }: WorldMapProps) {
                 <span className="text-xs text-muted-foreground capitalize font-medium">
                   {risk}
                 </span>
-              </div>
+        </div>
               <Badge variant="outline" className="text-xs px-2 py-0 h-5">
                 {riskCounts[risk as keyof typeof riskCounts]}
               </Badge>
-            </div>
+        </div>
           ))}
         </div>
       </div>
-      
+
       {/* Control Panel */}
       <div className="absolute top-4 right-4 flex flex-col gap-2">
         <Button
@@ -706,16 +708,16 @@ export function WorldMap({ selectedRoute, onRouteSelect }: WorldMapProps) {
             <div className="flex items-center justify-between text-xs">
               <span className="text-muted-foreground">Status:</span>
               <span className="text-foreground font-medium capitalize">{tooltipData.status}</span>
-            </div>
+              </div>
             
             {tooltipData.geopoliticalFactors.length > 0 && (
               <div className="pt-2 border-t border-white/10">
                 <div className="text-xs text-muted-foreground mb-1">Recent Events:</div>
                 <div className="text-xs text-foreground leading-relaxed">
                   {tooltipData.geopoliticalFactors[0]}
-                </div>
               </div>
-            )}
+              </div>
+          )}
           </div>
         </div>
       )}

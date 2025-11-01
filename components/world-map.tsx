@@ -212,39 +212,85 @@ const WorldBasemap = ({ width, height, showBasemap }: BasemapProps) => {
     <g>
       {/* Bathymetry gradient background */}
       <defs>
+        {/* Ocean depth gradient */}
         <radialGradient id="bathymetry" cx="50%" cy="40%">
-          <stop offset="0%" stopColor="#0E151B" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#0B0F12" stopOpacity="1" />
+          <stop offset="0%" stopColor="#0F1921" stopOpacity="1" />
+          <stop offset="40%" stopColor="#0B0F12" stopOpacity="1" />
+          <stop offset="100%" stopColor="#050709" stopOpacity="1" />
         </radialGradient>
+        
+        {/* Land texture pattern */}
+        <pattern id="land-texture" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+          <circle cx="20" cy="20" r="1.5" fill="#1a2429" opacity="0.15" />
+          <circle cx="50" cy="30" r="1" fill="#1a2429" opacity="0.1" />
+          <circle cx="80" cy="20" r="1.5" fill="#1a2429" opacity="0.15" />
+          <circle cx="30" cy="70" r="1" fill="#1a2429" opacity="0.1" />
+          <circle cx="70" cy="60" r="1.5" fill="#1a2429" opacity="0.12" />
+        </pattern>
+        
+        {/* Mountain shadows */}
+        <linearGradient id="mountain-shadow" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#0E151B" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="#0E151B" stopOpacity="0" />
+        </linearGradient>
       </defs>
       
-      {/* Ocean base */}
+      {/* Ocean base with bathymetry */}
       <rect width={width} height={height} fill="url(#bathymetry)" />
       
-      {/* Continents */}
-      {continents.map((path, index) => (
-        <path
-          key={`continent-${index}`}
-          d={path}
-          fill="#0E151B"
-          fillOpacity="0.9"
-          stroke="#1C2935"
-          strokeWidth="1"
-          strokeOpacity="0.55"
-        />
-      ))}
+      {/* Continents with physical styling */}
+      {continents.map((path, index) => {
+        // Assign colors based on continent location for variety
+        const continentColors = [
+          "#182122", // Africa - earth tone
+          "#1a2429", // Europe - cooler tone
+          "#162323", // Asia - varied earth
+          "#1a2529", // North America - cooler earth
+          "#182122", // South America - earth tone
+          "#1c2628", // Australia - darker earth
+        ]
+        
+        return (
+          <g key={`continent-${index}`}>
+            {/* Base landmass */}
+            <path
+              d={path}
+              fill={continentColors[index]}
+              fillOpacity="0.95"
+              stroke="#1C2935"
+              strokeWidth="1.5"
+              strokeOpacity="0.7"
+            />
+            {/* Textured overlay */}
+            <path
+              d={path}
+              fill="url(#land-texture)"
+              stroke="none"
+            />
+            {/* Subtle mountain/hill shadows (random application) */}
+            {index % 2 === 0 && (
+              <path
+                d={path}
+                fill="url(#mountain-shadow)"
+                stroke="none"
+              />
+            )}
+          </g>
+        )
+      })}
       
-      {/* Country boundaries (subtle) */}
+      {/* Subtle country boundaries */}
       <path
-        d="M 480 180 L 520 140 L 570 130 L 610 150 L 630 170"
+        d={`M ${520*scaleX} ${140*scaleY} L ${560*scaleX} ${110*scaleY} L ${610*scaleX} ${100*scaleY} L ${650*scaleX} ${110*scaleY} M ${650*scaleX} ${150*scaleY} L ${630*scaleX} ${180*scaleY} L ${600*scaleX} ${190*scaleY} L ${570*scaleX} ${175*scaleY}`}
         stroke="#1C2935"
         strokeWidth="0.5"
-        strokeOpacity="0.35"
+        strokeOpacity="0.3"
         fill="none"
+        strokeDasharray="2,2"
       />
       
       {/* Graticule (latitude/longitude lines) */}
-      <g stroke="#203040" strokeWidth="0.5" strokeDasharray="3,3" strokeOpacity="0.3" fill="none">
+      <g stroke="#203040" strokeWidth="0.5" strokeDasharray="3,3" strokeOpacity="0.2" fill="none">
         {/* Latitude lines (20° intervals) */}
         {[-60, -40, -20, 0, 20, 40, 60].map((lat) => {
           const y = ((90 - lat) / 180) * height

@@ -8,10 +8,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { riskAlerts, opportunities, type RiskAlert, type Opportunity } from "@/lib/mock-data"
 import { AlertTriangle, TrendingUp, Clock, Target, ChevronRight, Filter, ArrowUpRight } from "lucide-react"
+import { useLanguage } from "@/components/language-provider"
+import { getTranslation } from "@/lib/i18n"
 
 export function RiskOpportunitiesPanel() {
+  const { language } = useLanguage()
   const [selectedTab, setSelectedTab] = useState<"risks" | "opportunities">("risks")
   const [severityFilter, setSeverityFilter] = useState<string>("all")
+  
+  const t = (key: keyof import('@/lib/i18n').Translations) => getTranslation(language, key)
 
   const filteredRisks =
     severityFilter === "all" ? riskAlerts : riskAlerts.filter((alert) => alert.severity === severityFilter)
@@ -40,7 +45,7 @@ export function RiskOpportunitiesPanel() {
   return (
     <Card className="glass-panel p-4 h-full">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-foreground">Intelligence Feed</h2>
+        <h2 className="text-xl font-semibold text-foreground">{t('intelligenceFeed')}</h2>
         <Button variant="ghost" size="sm">
           <Filter className="w-4 h-4" />
         </Button>
@@ -50,11 +55,11 @@ export function RiskOpportunitiesPanel() {
         <TabsList className="grid w-full grid-cols-2 mb-4">
           <TabsTrigger value="risks" className="flex items-center gap-2">
             <AlertTriangle className="w-4 h-4" />
-            Risks ({riskAlerts.length})
+            {t('risks')} ({riskAlerts.length})
           </TabsTrigger>
           <TabsTrigger value="opportunities" className="flex items-center gap-2">
             <TrendingUp className="w-4 h-4" />
-            Opportunities ({opportunities.length})
+            {t('opportunities')} ({opportunities.length})
           </TabsTrigger>
         </TabsList>
 
@@ -73,21 +78,21 @@ export function RiskOpportunitiesPanel() {
               size="sm"
               onClick={() => setSeverityFilter("critical")}
             >
-              Critical
+              {t('critical')}
             </Button>
             <Button
               variant={severityFilter === "high" ? "default" : "outline"}
               size="sm"
               onClick={() => setSeverityFilter("high")}
             >
-              High
+              {t('high')}
             </Button>
             <Button
               variant={severityFilter === "medium" ? "default" : "outline"}
               size="sm"
               onClick={() => setSeverityFilter("medium")}
             >
-              Medium
+              {t('medium')}
             </Button>
           </div>
 

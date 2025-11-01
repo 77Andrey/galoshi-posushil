@@ -12,9 +12,13 @@ import { RoutesTable } from "@/components/routes-table"
 import { ScenariosDialog } from "@/components/scenarios-dialog"
 import { ExportDialog } from "@/components/export-dialog"
 import { KeyboardShortcutsDialog } from "@/components/keyboard-shortcuts-dialog"
+import { LanguageSelector } from "@/components/language-selector"
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
+import { useLanguage } from "@/components/language-provider"
+import { getTranslation } from "@/lib/i18n"
 
 export default function DashboardPage() {
+  const { language } = useLanguage()
   const [selectedRoute, setSelectedRoute] = useState<string | null>(null)
   const [showShortcuts, setShowShortcuts] = useState(false)
   const scenariosButtonRef = useRef<HTMLButtonElement>(null)
@@ -51,10 +55,15 @@ export default function DashboardPage() {
       <header className="mb-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground text-balance">Trade Superhighways</h1>
-            <p className="text-muted-foreground mt-1">Global Trade Intelligence & Risk Analysis</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground text-balance">
+              {getTranslation(language, 'title')}
+            </h1>
+            <p className="text-muted-foreground mt-1">
+              {getTranslation(language, 'subtitle')}
+            </p>
           </div>
           <div className="flex items-center gap-2">
+            <LanguageSelector />
             <div ref={scenariosButtonRef as any}>
               <ScenariosDialog />
             </div>
@@ -71,7 +80,7 @@ export default function DashboardPage() {
         <Card className="glass-panel p-4">
           <div className="flex items-center gap-2 mb-2">
             <Ship className="w-4 h-4 text-primary" />
-            <span className="text-xs text-muted-foreground">Trade Volume</span>
+            <span className="text-xs text-muted-foreground">{getTranslation(language, 'tradeVolume')}</span>
           </div>
           <div className="text-2xl font-bold text-foreground">${riskMetrics.globalTradeVolume}T</div>
         </Card>
@@ -79,7 +88,7 @@ export default function DashboardPage() {
         <Card className="glass-panel p-4">
           <div className="flex items-center gap-2 mb-2">
             <AlertTriangle className="w-4 h-4 text-destructive" />
-            <span className="text-xs text-muted-foreground">At Risk</span>
+            <span className="text-xs text-muted-foreground">{getTranslation(language, 'atRisk')}</span>
           </div>
           <div className="text-2xl font-bold text-destructive">{riskMetrics.routesAtRisk}</div>
         </Card>
@@ -87,7 +96,7 @@ export default function DashboardPage() {
         <Card className="glass-panel p-4">
           <div className="flex items-center gap-2 mb-2">
             <Activity className="w-4 h-4 text-accent" />
-            <span className="text-xs text-muted-foreground">Disruptions</span>
+            <span className="text-xs text-muted-foreground">{getTranslation(language, 'disruptions')}</span>
           </div>
           <div className="text-2xl font-bold text-accent">{riskMetrics.activeDisruptions}</div>
         </Card>
@@ -95,7 +104,7 @@ export default function DashboardPage() {
         <Card className="glass-panel p-4">
           <div className="flex items-center gap-2 mb-2">
             <TrendingDown className="w-4 h-4 text-secondary" />
-            <span className="text-xs text-muted-foreground">Avg Delay</span>
+            <span className="text-xs text-muted-foreground">{getTranslation(language, 'avgDelay')}</span>
           </div>
           <div className="text-2xl font-bold text-foreground">{riskMetrics.averageDelayDays}d</div>
         </Card>
@@ -103,7 +112,7 @@ export default function DashboardPage() {
         <Card className="glass-panel p-4">
           <div className="flex items-center gap-2 mb-2">
             <TrendingUp className="w-4 h-4 text-chart-2" />
-            <span className="text-xs text-muted-foreground">Est. Losses</span>
+            <span className="text-xs text-muted-foreground">{getTranslation(language, 'estLosses')}</span>
           </div>
           <div className="text-2xl font-bold text-foreground">${riskMetrics.estimatedLosses}B</div>
         </Card>
@@ -111,7 +120,7 @@ export default function DashboardPage() {
         <Card className="glass-panel p-4">
           <div className="flex items-center gap-2 mb-2">
             <AlertTriangle className="w-4 h-4 text-destructive" />
-            <span className="text-xs text-muted-foreground">Critical Points</span>
+            <span className="text-xs text-muted-foreground">{getTranslation(language, 'criticalPoints')}</span>
           </div>
           <div className="text-2xl font-bold text-destructive">{riskMetrics.criticalChokepoints}</div>
         </Card>
@@ -122,10 +131,10 @@ export default function DashboardPage() {
         {/* Map Section */}
         <Card className="lg:col-span-2 glass-panel p-4">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-foreground">Global Trade Routes</h2>
+            <h2 className="text-xl font-semibold text-foreground">{getTranslation(language, 'globalTradeRoutes')}</h2>
             <div className="flex items-center gap-2">
               <Badge variant="outline" className="text-xs">
-                Live Data
+                {getTranslation(language, 'liveData')}
               </Badge>
               <div className="w-2 h-2 rounded-full bg-chart-2 animate-pulse" />
             </div>
@@ -138,7 +147,7 @@ export default function DashboardPage() {
         {/* Route Details Panel */}
         <Card className="glass-panel p-4">
           <h2 className="text-xl font-semibold text-foreground mb-4">
-            {selectedRouteData ? "Route Details" : "Select a Route"}
+            {selectedRouteData ? getTranslation(language, 'routeDetails') : getTranslation(language, 'selectRoute')}
           </h2>
 
           {selectedRouteData ? (
@@ -152,14 +161,14 @@ export default function DashboardPage() {
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Status</span>
+                  <span className="text-sm text-muted-foreground">{getTranslation(language, 'status')}</span>
                   <Badge variant={selectedRouteData.status === "active" ? "default" : "destructive"}>
                     {selectedRouteData.status}
                   </Badge>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Risk Level</span>
+                  <span className="text-sm text-muted-foreground">{getTranslation(language, 'riskLevel')}</span>
                   <Badge
                     variant={
                       selectedRouteData.risk === "critical"
@@ -176,23 +185,23 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Volume</span>
+                  <span className="text-sm text-muted-foreground">{getTranslation(language, 'volume')}</span>
                   <span className="text-sm font-semibold text-foreground">${selectedRouteData.volume}B</span>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Commodity</span>
+                  <span className="text-sm text-muted-foreground">{getTranslation(language, 'commodity')}</span>
                   <span className="text-sm text-foreground">{selectedRouteData.commodity}</span>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Alternatives</span>
+                  <span className="text-sm text-muted-foreground">{getTranslation(language, 'alternatives')}</span>
                   <span className="text-sm text-foreground">{selectedRouteData.alternativeRoutes} routes</span>
                 </div>
               </div>
 
               <div>
-                <h4 className="text-sm font-semibold text-foreground mb-2">Chokepoints Passed</h4>
+                <h4 className="text-sm font-semibold text-foreground mb-2">{getTranslation(language, 'chokepointsPassed')}</h4>
                 <div className="space-y-1">
                   {selectedRouteData.chokepointsPassed.map((cp, idx) => (
                     <div key={idx} className="text-xs text-muted-foreground flex items-center gap-2">
@@ -204,7 +213,7 @@ export default function DashboardPage() {
               </div>
 
               <div>
-                <h4 className="text-sm font-semibold text-foreground mb-2">Geopolitical Factors</h4>
+                <h4 className="text-sm font-semibold text-foreground mb-2">{getTranslation(language, 'geopoliticalFactors')}</h4>
                 <div className="space-y-1">
                   {selectedRouteData.geopoliticalFactors.map((factor, idx) => (
                     <div key={idx} className="text-xs text-muted-foreground flex items-center gap-2">
@@ -216,14 +225,14 @@ export default function DashboardPage() {
               </div>
 
               <Button className="w-full mt-4 bg-transparent" variant="outline">
-                View Full Analysis
+                {getTranslation(language, 'viewFullAnalysis')}
               </Button>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-[400px] text-center">
               <Globe className="w-16 h-16 text-muted-foreground/30 mb-4" />
               <p className="text-sm text-muted-foreground">
-                Click on a trade route or chokepoint on the map to view detailed information
+                {getTranslation(language, 'clickToView')}
               </p>
               <p className="text-xs text-muted-foreground mt-2">
                 Press <kbd className="px-1.5 py-0.5 text-xs font-semibold bg-muted border border-border rounded">?</kbd>{" "}

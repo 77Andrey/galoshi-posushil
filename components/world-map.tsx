@@ -194,8 +194,17 @@ const WorldBasemap = ({ width, height, showBasemap }: BasemapProps) => {
   const scaleY = height / 600
   
   const continents = [
-    // Africa outline (more accurate shape)
-    `M ${445*scaleX} ${157*scaleY} L ${470*scaleX} ${135*scaleY} L ${490*scaleX} ${95*scaleY} L ${510*scaleX} ${82*scaleY} L ${530*scaleX} ${92*scaleY} L ${550*scaleX} ${125*scaleY} L ${565*scaleX} ${172*scaleY} L ${568*scaleX} ${228*scaleY} L ${565*scaleX} ${285*scaleY} L ${558*scaleX} ${335*scaleY} L ${545*scaleX} ${380*scaleY} L ${525*scaleX} ${420*scaleY} L ${505*scaleX} ${448*scaleY} L ${480*scaleX} ${470*scaleY} L ${458*scaleX} ${478*scaleY} L ${435*scaleX} ${478*scaleY} L ${415*scaleX} ${468*scaleY} L ${398*scaleX} ${448*scaleY} L ${388*scaleX} ${418*scaleY} L ${383*scaleX} ${380*scaleY} L ${382*scaleX} ${337*scaleY} L ${388*scaleX} ${292*scaleY} L ${400*scaleX} ${250*scaleY} L ${417*scaleX} ${212*scaleY} L ${430*scaleX} ${182*scaleY} Z`,
+    // Africa outline (detailed with curves)
+    `M ${445*scaleX} ${157*scaleY} C ${455*scaleX} ${148*scaleY}, ${465*scaleX} ${140*scaleY}, ${475*scaleX} ${130*scaleY} 
+     L ${495*scaleX} ${102*scaleY} C ${505*scaleX} ${90*scaleY}, ${515*scaleX} ${85*scaleY}, ${525*scaleX} ${88*scaleY}
+     L ${545*scaleX} ${115*scaleY} C ${555*scaleX} ${145*scaleY}, ${562*scaleX} ${195*scaleY}, ${567*scaleX} ${245*scaleY}
+     L ${565*scaleX} ${295*scaleY} C ${562*scaleX} ${320*scaleY}, ${555*scaleX} ${345*scaleY}, ${545*scaleX} ${375*scaleY}
+     L ${528*scaleX} ${415*scaleY} C ${518*scaleX} ${435*scaleY}, ${505*scaleX} ${452*scaleY}, ${490*scaleX} ${470*scaleY}
+     L ${468*scaleX} ${477*scaleY} C ${453*scaleX} ${479*scaleY}, ${438*scaleX} ${478*scaleY}, ${423*scaleX} ${472*scaleY}
+     L ${405*scaleX} ${460*scaleY} C ${395*scaleX} ${448*scaleY}, ${387*scaleX} ${434*scaleY}, ${383*scaleX} ${418*scaleY}
+     L ${381*scaleX} ${395*scaleY} C ${380*scaleX} ${362*scaleY}, ${385*scaleX} ${325*scaleY}, ${393*scaleX} ${295*scaleY}
+     L ${403*scaleX} ${268*scaleY} C ${410*scaleX} ${242*scaleY}, ${420*scaleX} ${220*scaleY}, ${432*scaleX} ${195*scaleY}
+     L ${442*scaleX} ${172*scaleY} Z`,
     // Europe outline
     `M ${495*scaleX} ${103*scaleY} L ${530*scaleX} ${68*scaleY} L ${570*scaleX} ${52*scaleY} L ${610*scaleX} ${48*scaleY} L ${650*scaleX} ${60*scaleY} L ${680*scaleX} ${85*scaleY} L ${695*scaleX} ${120*scaleY} L ${698*scaleX} ${155*scaleY} L ${690*scaleX} ${185*scaleY} L ${675*scaleX} ${208*scaleY} L ${655*scaleX} ${220*scaleY} L ${630*scaleX} ${225*scaleY} L ${605*scaleX} ${218*scaleY} L ${585*scaleX} ${205*scaleY} L ${570*scaleX} ${188*scaleY} L ${558*scaleX} ${168*scaleY} L ${545*scaleX} ${150*scaleY} L ${525*scaleX} ${135*scaleY} L ${505*scaleX} ${118*scaleY} Z`,
     // Asia outline (mainland, including Middle East)

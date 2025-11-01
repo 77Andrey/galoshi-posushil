@@ -1,0 +1,68 @@
+{
+  "commodities": [
+    {
+      "id": "ELEC",
+      "name": "Electronics",
+      "avgTariff": 7.5,
+      "volatility": "Medium",
+      "topOrigins": ["SHA", "SHE", "HKG"],
+      "topDestinations": ["LAX", "NYC", "SAV"]
+    },
+    {
+      "id": "MACH",
+      "name": "Machinery",
+      "avgTariff": 3.2,
+      "volatility": "Low",
+      "topOrigins": ["SGP", "SHA", "NGB"],
+      "topDestinations": ["RTM", "HAM", "ANT"]
+    },
+    {
+      "id": "CONS",
+      "name": "Consumer Goods",
+      "avgTariff": 12.5,
+      "volatility": "High",
+      "topOrigins": ["SHE", "GUA", "NGB"],
+      "topDestinations": ["LGB", "LAX", "NYC"]
+    },
+    {
+      "id": "TEXT",
+      "name": "Textiles",
+      "avgTariff": 8.0,
+      "volatility": "Medium",
+      "topOrigins": ["NGB", "SHA", "GUA"],
+      "topDestinations": ["NYC", "LAX", "RTM"]
+    },
+    {
+      "id": "AUTO",
+      "name": "Automotive Parts",
+      "avgTariff": 2.5,
+      "volatility": "Low",
+      "topOrigins": ["BUS", "SHA", "NGB"],
+      "topDestinations": ["LAX", "NYC", "HAM"]
+    },
+    {
+      "id": "CHEM",
+      "name": "Chemicals",
+      "avgTariff": 4.5,
+      "volatility": "Medium",
+      "topOrigins": ["RTM", "SGP", "ANT"],
+      "topDestinations": ["NYC", "LAX", "SHA"]
+    },
+    {
+      "id": "OILG",
+      "name": "Oil & Gas",
+      "avgTariff": 0.0,
+      "volatility": "Very High",
+      "topOrigins": ["DXB", "SGP"],
+      "topDestinations": ["SHA", "NGB", "BUS"]
+    },
+    {
+      "id": "FURN",
+      "name": "Furniture",
+      "avgTariff": 5.0,
+      "volatility": "Low",
+      "topOrigins": ["GUA", "SHA", "HKG"],
+      "topDestinations": ["ANT", "RTM", "NYC"]
+    }
+  ]
+}

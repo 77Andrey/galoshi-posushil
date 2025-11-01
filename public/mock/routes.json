@@ -1,0 +1,114 @@
+{
+  "routes": [
+    {
+      "id": "R001",
+      "from": "SHA",
+      "to": "LAX",
+      "commodity": "Electronics",
+      "volume": 2400000,
+      "transitDays": 14,
+      "riskScore": 2.4,
+      "tariffRate": 7.5,
+      "incidents": []
+    },
+    {
+      "id": "R002",
+      "from": "SGP",
+      "to": "RTM",
+      "commodity": "Machinery",
+      "volume": 1800000,
+      "transitDays": 21,
+      "riskScore": 1.9,
+      "tariffRate": 3.2,
+      "incidents": []
+    },
+    {
+      "id": "R003",
+      "from": "SHE",
+      "to": "LGB",
+      "commodity": "Consumer Goods",
+      "volume": 3200000,
+      "transitDays": 16,
+      "riskScore": 2.6,
+      "tariffRate": 12.5,
+      "incidents": ["Congestion at destination"]
+    },
+    {
+      "id": "R004",
+      "from": "NGB",
+      "to": "NYC",
+      "commodity": "Textiles",
+      "volume": 1500000,
+      "transitDays": 18,
+      "riskScore": 2.3,
+      "tariffRate": 8.0,
+      "incidents": []
+    },
+    {
+      "id": "R005",
+      "from": "BUS",
+      "to": "LAX",
+      "commodity": "Automotive Parts",
+      "volume": 980000,
+      "transitDays": 12,
+      "riskScore": 2.0,
+      "tariffRate": 2.5,
+      "incidents": []
+    },
+    {
+      "id": "R006",
+      "from": "RTM",
+      "to": "NYC",
+      "commodity": "Chemicals",
+      "volume": 1200000,
+      "transitDays": 8,
+      "riskScore": 1.8,
+      "tariffRate": 4.5,
+      "incidents": []
+    },
+    {
+      "id": "R007",
+      "from": "DXB",
+      "to": "SGP",
+      "commodity": "Oil & Gas",
+      "volume": 2100000,
+      "transitDays": 10,
+      "riskScore": 3.1,
+      "tariffRate": 0.0,
+      "incidents": ["Geopolitical tensions"]
+    },
+    {
+      "id": "R008",
+      "from": "HKG",
+      "to": "SAV",
+      "commodity": "Electronics",
+      "volume": 1650000,
+      "transitDays": 19,
+      "riskScore": 2.2,
+      "tariffRate": 7.5,
+      "incidents": []
+    },
+    {
+      "id": "R009",
+      "from": "GUA",
+      "to": "ANT",
+      "commodity": "Furniture",
+      "volume": 890000,
+      "transitDays": 24,
+      "riskScore": 2.1,
+      "tariffRate": 5.0,
+      "incidents": []
+    },
+    {
+      "id": "R010",
+      "from": "SHA",
+      "to": "HAM",
+      "commodity": "Machinery",
+      "volume": 1750000,
+      "transitDays": 26,
+      "riskScore": 2.0,
+      "tariffRate": 3.2,
+      "incidents": []
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "scenarios": [
+    {
+      "id": "S001",
+      "name": "Tariff Increase: Electronics +5%",
+      "type": "tariff",
+      "parameters": {
+        "commodity": "ELEC",
+        "change": 5.0
+      },
+      "impact": {
+        "affectedRoutes": ["R001", "R008"],
+        "volumeChange": -8.5,
+        "marginChange": -12.3
+      }
+    },
+    {
+      "id": "S002",
+      "name": "Port Closure: Shanghai 7 Days",
+      "type": "disruption",
+      "parameters": {
+        "port": "SHA",
+        "duration": 7
+      },
+      "impact": {
+        "affectedRoutes": ["R001", "R010"],
+        "volumeChange": -35.0,
+        "marginChange": -28.5
+      }
+    },
+    {
+      "id": "S003",
+      "name": "Currency Shift: USD +10%",
+      "type": "currency",
+      "parameters": {
+        "currency": "USD",
+        "change": 10.0
+      },
+      "impact": {
+        "affectedRoutes": ["R001", "R003", "R004", "R005", "R006", "R008"],
+        "volumeChange": -5.2,
+        "marginChange": 8.7
+      }
+    }
+  ]
+}

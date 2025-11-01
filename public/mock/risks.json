@@ -1,0 +1,54 @@
+{
+  "regionalRisks": [
+    {
+      "region": "Asia-Pacific",
+      "riskScore": 2.2,
+      "factors": ["Port congestion in major Chinese ports", "Typhoon season disruptions", "Regulatory changes"],
+      "trend": "stable"
+    },
+    {
+      "region": "North America",
+      "riskScore": 2.4,
+      "factors": ["Labor disputes at West Coast ports", "Infrastructure bottlenecks", "Tariff uncertainties"],
+      "trend": "increasing"
+    },
+    {
+      "region": "Europe",
+      "riskScore": 1.8,
+      "factors": ["Energy costs", "Brexit-related delays", "Environmental regulations"],
+      "trend": "stable"
+    },
+    {
+      "region": "Middle East",
+      "riskScore": 3.0,
+      "factors": ["Geopolitical tensions", "Red Sea security concerns", "Currency fluctuations"],
+      "trend": "increasing"
+    }
+  ],
+  "anomalies": [
+    {
+      "id": "A001",
+      "type": "delay",
+      "route": "R003",
+      "severity": "medium",
+      "description": "Unexpected 3-day delay at Long Beach due to congestion",
+      "timestamp": "2025-01-28T14:30:00Z"
+    },
+    {
+      "id": "A002",
+      "type": "tariff",
+      "commodity": "CONS",
+      "severity": "high",
+      "description": "Tariff increase from 10% to 12.5% on consumer goods",
+      "timestamp": "2025-01-27T09:00:00Z"
+    },
+    {
+      "id": "A003",
+      "type": "security",
+      "route": "R007",
+      "severity": "high",
+      "description": "Heightened security concerns in Red Sea corridor",
+      "timestamp": "2025-01-26T16:45:00Z"
+    }
+  ]
+}

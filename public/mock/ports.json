@@ -1,0 +1,124 @@
+{
+  "ports": [
+    {
+      "id": "SHA",
+      "name": "Shanghai",
+      "country": "China",
+      "coordinates": [121.4737, 31.2304],
+      "volume": 47300000,
+      "riskScore": 2.3
+    },
+    {
+      "id": "SGP",
+      "name": "Singapore",
+      "country": "Singapore",
+      "coordinates": [103.8198, 1.3521],
+      "volume": 37200000,
+      "riskScore": 1.8
+    },
+    {
+      "id": "NGB",
+      "name": "Ningbo-Zhoushan",
+      "country": "China",
+      "coordinates": [121.544, 29.8683],
+      "volume": 31080000,
+      "riskScore": 2.1
+    },
+    {
+      "id": "SHE",
+      "name": "Shenzhen",
+      "country": "China",
+      "coordinates": [114.0579, 22.5431],
+      "volume": 28770000,
+      "riskScore": 2.4
+    },
+    {
+      "id": "GUA",
+      "name": "Guangzhou",
+      "country": "China",
+      "coordinates": [113.2644, 23.1291],
+      "volume": 24180000,
+      "riskScore": 2.2
+    },
+    {
+      "id": "BUS",
+      "name": "Busan",
+      "country": "South Korea",
+      "coordinates": [129.0756, 35.1796],
+      "volume": 22710000,
+      "riskScore": 1.9
+    },
+    {
+      "id": "HKG",
+      "name": "Hong Kong",
+      "country": "Hong Kong",
+      "coordinates": [114.1694, 22.3193],
+      "volume": 17800000,
+      "riskScore": 2.0
+    },
+    {
+      "id": "LAX",
+      "name": "Los Angeles",
+      "country": "USA",
+      "coordinates": [-118.2437, 33.7701],
+      "volume": 10677000,
+      "riskScore": 2.5
+    },
+    {
+      "id": "LGB",
+      "name": "Long Beach",
+      "country": "USA",
+      "coordinates": [-118.1937, 33.7701],
+      "volume": 8113000,
+      "riskScore": 2.6
+    },
+    {
+      "id": "RTM",
+      "name": "Rotterdam",
+      "country": "Netherlands",
+      "coordinates": [4.4777, 51.9244],
+      "volume": 14810000,
+      "riskScore": 1.7
+    },
+    {
+      "id": "ANT",
+      "name": "Antwerp",
+      "country": "Belgium",
+      "coordinates": [4.4025, 51.2194],
+      "volume": 12040000,
+      "riskScore": 1.8
+    },
+    {
+      "id": "HAM",
+      "name": "Hamburg",
+      "country": "Germany",
+      "coordinates": [9.9937, 53.5511],
+      "volume": 8730000,
+      "riskScore": 1.6
+    },
+    {
+      "id": "DXB",
+      "name": "Dubai",
+      "country": "UAE",
+      "coordinates": [55.2708, 25.2048],
+      "volume": 14110000,
+      "riskScore": 2.8
+    },
+    {
+      "id": "NYC",
+      "name": "New York/New Jersey",
+      "country": "USA",
+      "coordinates": [-74.006, 40.7128],
+      "volume": 7630000,
+      "riskScore": 2.3
+    },
+    {
+      "id": "SAV",
+      "name": "Savannah",
+      "country": "USA",
+      "coordinates": [-81.0912, 32.0809],
+      "volume": 5760000,
+      "riskScore": 2.1
+    }
+  ]
+}

@@ -236,45 +236,28 @@ const WorldBasemap = ({ width, height, showBasemap }: BasemapProps) => {
       </defs>
       
       {/* Ocean base with bathymetry */}
-      <rect width={width} height={height} fill="url(#bathymetry)" />
+      <rect width={width} height={height} fill="#0B0F12" />
       
       {/* Continents with physical styling */}
       {continents.map((path, index) => {
-        // Assign colors based on continent location for variety
-        const continentColors = [
-          "#182122", // Africa - earth tone
-          "#1a2429", // Europe - cooler tone
-          "#162323", // Asia - varied earth
-          "#1a2529", // North America - cooler earth
-          "#182122", // South America - earth tone
-          "#1c2628", // Australia - darker earth
-        ]
-        
         return (
           <g key={`continent-${index}`}>
-            {/* Base landmass */}
+            {/* Base landmass - uniform color as per spec */}
             <path
               d={path}
-              fill={continentColors[index]}
-              fillOpacity="0.95"
-              stroke="#1C2935"
-              strokeWidth="1.5"
+              fill="#0E151B"
+              fillOpacity="0.92"
+              stroke="#223142"
+              strokeWidth="0.75"
               strokeOpacity="0.7"
             />
-            {/* Textured overlay */}
+            {/* Subtle texture overlay */}
             <path
               d={path}
               fill="url(#land-texture)"
               stroke="none"
+              opacity="0.4"
             />
-            {/* Subtle mountain/hill shadows (random application) */}
-            {index % 2 === 0 && (
-              <path
-                d={path}
-                fill="url(#mountain-shadow)"
-                stroke="none"
-              />
-            )}
           </g>
         )
       })}

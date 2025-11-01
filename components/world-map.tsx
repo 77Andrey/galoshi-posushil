@@ -189,20 +189,23 @@ const WorldBasemap = ({ width, height, showBasemap }: BasemapProps) => {
   if (!showBasemap) return null
   
   // Simplified continent outlines (Equirectangular projection)
-  // These are rough approximations for a low-detail base layer
+  // Scaled for 1000px width reference - will scale to actual dimensions
+  const scaleX = width / 1000
+  const scaleY = height / 600
+  
   const continents = [
-    // Africa outline (very simplified)
-    "M 420 250 L 450 200 L 520 150 L 550 200 L 570 300 L 550 450 L 520 480 L 450 460 L 420 380 Z",
+    // Africa outline (more accurate shape)
+    `M ${445*scaleX} ${157*scaleY} L ${470*scaleX} ${135*scaleY} L ${490*scaleX} ${95*scaleY} L ${510*scaleX} ${82*scaleY} L ${530*scaleX} ${92*scaleY} L ${550*scaleX} ${125*scaleY} L ${565*scaleX} ${172*scaleY} L ${568*scaleX} ${228*scaleY} L ${565*scaleX} ${285*scaleY} L ${558*scaleX} ${335*scaleY} L ${545*scaleX} ${380*scaleY} L ${525*scaleX} ${420*scaleY} L ${505*scaleX} ${448*scaleY} L ${480*scaleX} ${470*scaleY} L ${458*scaleX} ${478*scaleY} L ${435*scaleX} ${478*scaleY} L ${415*scaleX} ${468*scaleY} L ${398*scaleX} ${448*scaleY} L ${388*scaleX} ${418*scaleY} L ${383*scaleX} ${380*scaleY} L ${382*scaleX} ${337*scaleY} L ${388*scaleX} ${292*scaleY} L ${400*scaleX} ${250*scaleY} L ${417*scaleX} ${212*scaleY} L ${430*scaleX} ${182*scaleY} Z`,
     // Europe outline
-    "M 480 180 L 520 140 L 570 130 L 610 150 L 630 170 L 620 200 L 580 210 L 520 190 Z",
-    // Asia outline (mainland)
-    "M 550 150 L 750 130 L 920 150 L 940 200 L 930 250 L 920 280 L 850 300 L 750 290 L 650 280 L 550 250 Z",
+    `M ${495*scaleX} ${103*scaleY} L ${530*scaleX} ${68*scaleY} L ${570*scaleX} ${52*scaleY} L ${610*scaleX} ${48*scaleY} L ${650*scaleX} ${60*scaleY} L ${680*scaleX} ${85*scaleY} L ${695*scaleX} ${120*scaleY} L ${698*scaleX} ${155*scaleY} L ${690*scaleX} ${185*scaleY} L ${675*scaleX} ${208*scaleY} L ${655*scaleX} ${220*scaleY} L ${630*scaleX} ${225*scaleY} L ${605*scaleX} ${218*scaleY} L ${585*scaleX} ${205*scaleY} L ${570*scaleX} ${188*scaleY} L ${558*scaleX} ${168*scaleY} L ${545*scaleX} ${150*scaleY} L ${525*scaleX} ${135*scaleY} L ${505*scaleX} ${118*scaleY} Z`,
+    // Asia outline (mainland, including Middle East)
+    `M ${555*scaleX} ${98*scaleY} L ${600*scaleX} ${75*scaleY} L ${670*scaleX} ${60*scaleY} L ${750*scaleX} ${52*scaleY} L ${830*scaleX} ${55*scaleY} L ${900*scaleX} ${70*scaleY} L ${948*scaleX} ${95*scaleY} L ${970*scaleX} ${130*scaleY} L ${975*scaleX} ${172*scaleY} L ${968*scaleX} ${215*scaleY} L ${950*scaleX} ${252*scaleY} L ${920*scaleX} ${280*scaleY} L ${882*scaleX} ${300*scaleY} L ${835*scaleX} ${312*scaleY} L ${785*scaleX} ${318*scaleY} L ${735*scaleX} ${315*scaleY} L ${688*scaleX} ${305*scaleY} L ${645*scaleX} ${290*scaleY} L ${608*scaleX} ${270*scaleY} L ${575*scaleX} ${248*scaleY} L ${555*scaleX} ${225*scaleY} L ${540*scaleX} ${198*scaleY} L ${528*scaleX} ${170*scaleY} L ${520*scaleX} ${142*scaleY} L ${535*scaleX} ${118*scaleY} Z`,
     // North America outline
-    "M 180 120 L 280 100 L 350 150 L 380 220 L 370 270 L 350 300 L 320 320 L 280 300 L 240 250 L 200 200 L 180 120 Z",
+    `M ${190*scaleX} ${75*scaleY} L ${235*scaleX} ${52*scaleY} L ${285*scaleX} ${38*scaleY} L ${340*scaleX} ${32*scaleY} L ${395*scaleX} ${40*scaleY} L ${445*scaleX} ${62*scaleY} L ${485*scaleX} ${95*scaleY} L ${508*scaleX} ${135*scaleY} L ${515*scaleX} ${178*scaleY} L ${510*scaleX} ${220*scaleY} L ${495*scaleX} ${255*scaleY} L ${470*scaleX} ${280*scaleY} L ${440*scaleX} ${295*scaleY} L ${408*scaleX} ${302*scaleY} L ${375*scaleX} ${298*scaleY} L ${345*scaleX} ${285*scaleY} L ${320*scaleX} ${265*scaleY} L ${302*scaleX} ${240*scaleY} L ${290*scaleX} ${212*scaleY} L ${285*scaleX} ${182*scaleY} L ${286*scaleX} ${152*scaleY} L ${293*scaleX} ${125*scaleY} L ${305*scaleX} ${102*scaleY} L ${325*scaleX} ${85*scaleY} L ${345*scaleX} ${75*scaleY} L ${165*scaleX} ${142*scaleY} L ${175*scaleX} ${108*scaleY} Z`,
     // South America outline
-    "M 250 350 L 320 340 L 380 370 L 400 450 L 380 520 L 320 550 L 250 520 Z",
+    `M ${268*scaleX} ${248*scaleY} L ${315*scaleX} ${232*scaleY} L ${365*scaleX} ${225*scaleY} L ${415*scaleX} ${228*scaleY} L ${458*scaleX} ${242*scaleY} L ${493*scaleX} ${268*scaleY} L ${515*scaleX} ${302*scaleY} L ${528*scaleX} ${342*scaleY} L ${530*scaleX} ${385*scaleY} L ${520*scaleX} ${425*scaleY} L ${500*scaleX} ${458*scaleY} L ${473*scaleX} ${482*scaleY} L ${440*scaleX} ${498*scaleY} L ${403*scaleX} ${505*scaleY} L ${365*scaleX} ${502*scaleY} L ${330*scaleX} ${490*scaleY} L ${300*scaleX} ${470*scaleY} L ${278*scaleX} ${443*scaleY} L ${265*scaleX} ${410*scaleY} L ${260*scaleX} ${375*scaleY} L ${263*scaleX} ${340*scaleY} L ${273*scaleX} ${308*scaleY} L ${289*scaleX} ${280*scaleY} L ${310*scaleX} ${258*scaleY} L ${338*scaleX} ${248*scaleY} L ${276*scaleX} ${265*scaleY} Z`,
     // Australia outline
-    "M 850 380 L 970 370 L 980 420 L 970 450 L 920 460 L 880 440 Z",
+    `M ${870*scaleX} ${368*scaleY} L ${935*scaleX} ${355*scaleY} L ${980*scaleX} ${360*scaleY} L ${988*scaleX} ${388*scaleY} L ${975*scaleX} ${412*scaleY} L ${945*scaleX} ${428*scaleY} L ${905*scaleX} ${432*scaleY} L ${868*scaleX} ${425*scaleY} L ${840*scaleX} ${408*scaleY} L ${825*scaleX} ${383*scaleY} Z`,
   ]
   
   return (

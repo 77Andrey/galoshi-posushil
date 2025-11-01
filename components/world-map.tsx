@@ -110,16 +110,25 @@ const AnimatedArc = ({
   
   // Calculate particle position
   const path = generateArcPath(origin, destination, route.risk)
-  const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path")
-  pathElement.setAttribute("d", path)
   
   let particleX = 0
   let particleY = 0
-  if (shouldAnimate && pathElement.getTotalLength) {
-    const length = pathElement.getTotalLength()
-    const point = pathElement.getPointAtLength(length * progress)
-    particleX = point.x
-    particleY = point.y
+  if (shouldAnimate && typeof document !== "undefined") {
+    try {
+      const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path")
+      pathElement.setAttribute("d", path)
+      
+      if (pathElement.getTotalLength) {
+        const length = pathElement.getTotalLength()
+        const point = pathElement.getPointAtLength(length * progress)
+        particleX = point.x
+        particleY = point.y
+      }
+    } catch (e) {
+      // Fallback to midpoint during SSR
+      particleX = (origin.x + destination.x) / 2
+      particleY = (origin.y + destination.y) / 2
+    }
   }
   
   const showGlow = isSelected || isHovered || route.risk === "critical"
